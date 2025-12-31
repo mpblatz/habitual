@@ -28,7 +28,7 @@ export default function LoginPage() {
         <div className="flex justify-center items-center w-full h-screen">
             <div className="flex flex-col bg-b-secondary dark:bg-db-secondary p-8 rounded-lg drop-shadow-md space-y-4">
                 <button onClick={() => navigate("/")}>
-                    <h1 className="text-purple-1 m-auto">Amplo</h1>
+                    <h1 className="text-purple-1 m-auto">Habitual</h1>
                 </button>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">

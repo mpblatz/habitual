@@ -111,7 +111,7 @@ export default function Nav() {
     return (
         <div>
             <div className="flex justify-between items-center py-4 space-x-1">
-                <h3 className="text-purple-1">Amplo</h3>
+                <h3 className="text-purple-1">Habitual</h3>
 
                 <div>
                     {user ? (
