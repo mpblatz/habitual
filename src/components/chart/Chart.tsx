@@ -1,3 +1,4 @@
+import { generateSampleGridData } from "~/lib/sampleGridData";
 import { getCurrentDate } from "../../lib/date";
 import GridV0 from "./GridV0";
 
@@ -39,7 +40,7 @@ export default function Chart({ habits }: { habits: Habit[] }) {
             <h3>Chart</h3>
             <hr className="mb-2" />
             <div className="bg-white flex justify-center rounded-md drop-shadow py-4 px-1">
-                <GridV0 values={populateGridData()} until={getCurrentDate()} />
+                <GridV0 values={generateSampleGridData()} until={getCurrentDate()} />
             </div>
         </div>
     );

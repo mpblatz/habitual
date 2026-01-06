@@ -1,75 +1,30 @@
-<a name="readme-top"></a>
+# React + TypeScript + Vite
 
-<!-- PROJECT LOGO -->
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-# Habitual : Another Habit Tracking Tool
+Currently, two official plugins are available:
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#built-with">Built With</a></li>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#resources">Resources</a></li>
-  </ol>
-</details>
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Built With
+## Expanding the ESLint configuration
 
-- [React (JavaScript Vite)](https://vitejs.dev/)
-- [Firebase (Auth and Firestore)](https://firebase.google.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- Configure the top-level `parserOptions` property like this:
 
-## Getting Started
-
-### Prerequisites
-
-- Node (Version 16+)
-- NPM (Version 8+)
-
-### Installation
-
-Install all the required packages in the `client` directory
-
-```
-cd client && npm i
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Usage
-
-To run the project locally
-
-### Prerequisites
-
-1.  Create a `.env` file in the `/client` directory
-2.  Add the following to the `.env` file
-
-```
-VITE_FIREBASE_API_KEY = {Firebase API Key}
-VITE_FIREBASE_AUTH_DOMAIN = {Firebase Auth Domain}
-VITE_FIREBASE_PROJECT_ID = {Firebase Project ID}
-VITE_FIREBASE_STORAGE_BUCKET = {Firebase Storage Bucket}
-VITE_FIREBASE_MESSAGING_SENDER_ID = {Firebase Messaging Sender ID}
-VITE_FIREBASE_APP_ID = {Firebase App ID}
-VITE_FIREBASE_MEASUREMENT_ID = {Firebase Measurement ID}
-```
-
-### Running the client
-
-1. Run the command `npm run dev` at the client directory
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
