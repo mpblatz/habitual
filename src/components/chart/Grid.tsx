@@ -23,14 +23,13 @@ export default function Grid() {
 
     return (
         <>
-            <h3>Chart</h3>
-            <hr />
-            <div className="bg-white flex justify-center rounded-md drop-shadow py-4">
+            <h3 className="font-heading font-bold">Chart</h3>
+            <div className="border-t border-divider" />
+            <div className="bg-card-bg border border-line flex justify-center rounded-card shadow-card py-4">
                 <div
                     ref={scrollableRef}
                     className="relative overflow-x-scroll flex flex-col flex-wrap h-[113px] w-[94%]"
                 >
-                    {/* pt-[100px] mt-[-100px] */}
                     {renderGrid()}
                 </div>
             </div>

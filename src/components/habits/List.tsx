@@ -55,9 +55,9 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
     }
     return (
         <div>
-            <div className="flex flex-col space-y-2">
-                <h3>Habits</h3>
-                <hr />
+            <div className="flex flex-col space-y-3">
+                <h3 className="font-heading font-bold">Habits</h3>
+                <div className="border-t border-divider" />
                 {renderItems()}
 
                 <button
@@ -65,23 +65,23 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
                         reset();
                         setOpen(true);
                     }}
-                    className="flex flex-row space-x-2 m-auto py-2 pl-2 pr-4"
+                    className="flex flex-row items-center space-x-2 mx-auto py-2 pl-2 pr-4 text-text-muted hover:text-text rounded-lg"
                 >
-                    <IconCirclePlus />
-                    <p className="">Add Habit</p>
+                    <IconCirclePlus size={18} />
+                    <span className="font-mono text-[11px] tracking-wide">Add Habit</span>
                 </button>
             </div>
 
             <Modal open={open} setOpen={setOpen} title={"Add Habit"}>
-                <form onSubmit={handleSubmit(handleAddHabit)} className="space-y-2">
+                <form onSubmit={handleSubmit(handleAddHabit)} className="space-y-3">
                     <div className="space-y-1">
                         <input
                             type="text"
                             placeholder="Habit Title"
                             {...register("title", { required: "Habit Title is required", minLength: 2 })}
-                            className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-full"
+                            className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-full focus:outline-none focus:border-line-hover"
                         />
-                        {errors.title && <p className="text-red-1 text-xs">{errors.title.message as string}</p>}
+                        {errors.title && <p className="text-error text-xs">{errors.title.message as string}</p>}
                     </div>
 
                     <div className="flex flex-row items-center space-x-2">
@@ -90,10 +90,10 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
                                 type="number"
                                 placeholder="45"
                                 {...register("goalNumber", { required: "Goal Number is required", minLength: 1 })}
-                                className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-[5ch]"
+                                className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-[5ch] focus:outline-none focus:border-line-hover"
                             />
                             {errors.goalNumber && (
-                                <p className="text-red-1 text-xs">{errors.goalNumber.message as string}</p>
+                                <p className="text-error text-xs">{errors.goalNumber.message as string}</p>
                             )}
                         </div>
 
@@ -102,20 +102,24 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
                                 type="text"
                                 placeholder="Minutes"
                                 {...register("goalUnit", { required: "Goal Units are required", minLength: 1 })}
-                                className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary"
+                                className="p-2.5 rounded-lg bg-input-bg border border-line text-text focus:outline-none focus:border-line-hover"
                             />
                             {errors.goalUnit && (
-                                <p className="text-red-1 text-xs">{errors.goalUnit.message as string}</p>
+                                <p className="text-error text-xs">{errors.goalUnit.message as string}</p>
                             )}
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-end pt-4">
-                        <button onClick={() => setOpen(false)} type="button">
-                            <p>Cancel</p>
+                    <div className="flex flex-row justify-end pt-4 space-x-3">
+                        <button
+                            onClick={() => setOpen(false)}
+                            type="button"
+                            className="px-3 py-1.5 rounded-lg text-text-muted hover:text-text text-[13px]"
+                        >
+                            Cancel
                         </button>
-                        <button className="ml-4 bg-purple-1 text-white drop-shadow-md py-2 px-4 rounded-md">
-                            <p>Add</p>
+                        <button className="px-4 py-1.5 bg-accent text-white rounded-lg text-[13px] font-medium hover:opacity-90">
+                            Add
                         </button>
                     </div>
                 </form>

@@ -224,12 +224,12 @@ export default class GridV0 extends React.Component<Props, State> {
         return (
             <Measure bounds onResize={(rect) => this.updateSize(rect.bounds)}>
                 {({ measureRef }: any) => (
-                    <div ref={measureRef} style={{ width: "100%" }}>
+                    <div ref={measureRef} style={{ width: "fit-content" }}>
                         <svg
                             style={{
-                                fontFamily: "Geologica, sans-serif",
-                                width: "100%",
+                                fontFamily: '"JetBrains Mono", monospace',
                             }}
+                            width={this.weekLabelWidth + 53 * (this.panelSize + this.panelMargin)}
                             height="110"
                         >
                             {innerDom}
@@ -240,13 +240,8 @@ export default class GridV0 extends React.Component<Props, State> {
         );
     }
 
-    updateSize(size?: BoundingRect) {
-        if (!size) return;
-
-        const visibleWeeks = Math.floor((size.width - this.weekLabelWidth) / 13);
-        this.setState({
-            columns: Math.min(visibleWeeks, this.state.maxWidth),
-        });
+    updateSize(_size?: BoundingRect) {
+        // Fixed at 53 columns (1 year)
     }
 }
 

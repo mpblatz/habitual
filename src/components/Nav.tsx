@@ -8,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logout, reauthWithGoogle } from "../api/firebase";
 import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 import Modal from "./Modal";
+import ThemeToggle from "./ThemeToggle";
 import { deleteUserById, getUser } from "../api/user";
 
 interface NameForm {
@@ -111,30 +112,41 @@ export default function Nav() {
     return (
         <div>
             <div className="flex justify-between items-center py-4 space-x-1">
-                <h3 className="text-purple-1">Habitual</h3>
+                <h3 className="text-accent font-heading font-bold">Habitual</h3>
 
-                <div>
+                <div className="flex items-center space-x-3">
+                    <ThemeToggle />
                     {user ? (
                         <Popover placement="bottom-end">
-                            <PopoverTrigger className="flex border-2 border-purple-1 px-2 py-1 rounded-lg space-x-1 text-purple-1 items-center">
-                                <IconUser className="w-5 h-5" />
-                                <p>{name}</p>
+                            <PopoverTrigger className="flex items-center px-3 py-1.5 rounded-lg space-x-1.5 text-text-muted border border-line bg-btn-bg hover:text-text hover:border-line-hover">
+                                <IconUser className="w-4 h-4" />
+                                <span className="font-mono text-[11px] tracking-wide">{name}</span>
                             </PopoverTrigger>
                             <PopoverContent className="Popover">
-                                <div className="flex flex-col items-start p-2 bg-b-secondary drop-shadow dark:bg-db-secondary rounded-md space-y-1">
-                                    <button onClick={() => setDeleteAccountOpen(true)}>
-                                        <p>Delete Account</p>
+                                <div
+                                    style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow-hover)" }}
+                                    className="flex flex-col items-start p-2 rounded-lg space-y-1"
+                                >
+                                    <button
+                                        onClick={() => setDeleteAccountOpen(true)}
+                                        className="text-text-muted hover:text-text text-[13px] px-2 py-1 w-full text-left rounded hover:bg-btn-bg"
+                                    >
+                                        Delete Account
                                     </button>
-                                    <button onClick={() => setChangeNameOpen(true)}>
-                                        <p>Change Name</p>
+                                    <button
+                                        onClick={() => setChangeNameOpen(true)}
+                                        className="text-text-muted hover:text-text text-[13px] px-2 py-1 w-full text-left rounded hover:bg-btn-bg"
+                                    >
+                                        Change Name
                                     </button>
                                     <button
                                         onClick={() => {
                                             logout();
                                             navigate("/login");
                                         }}
+                                        className="text-text-muted hover:text-text text-[13px] px-2 py-1 w-full text-left rounded hover:bg-btn-bg"
                                     >
-                                        <p>Logout</p>
+                                        Logout
                                     </button>
                                 </div>
                             </PopoverContent>
@@ -142,9 +154,9 @@ export default function Nav() {
                     ) : (
                         <button
                             onClick={() => navigate("/login")}
-                            className="flex border-2 border-purple-1 px-2 py-1 rounded-lg"
+                            className="flex px-3 py-1.5 rounded-lg border border-line bg-btn-bg text-text-muted hover:text-text hover:border-line-hover"
                         >
-                            <p className="text-purple-1">Login</p>
+                            <span className="font-mono text-[11px] tracking-wide">Login</span>
                         </button>
                     )}
                 </div>
@@ -157,17 +169,21 @@ export default function Nav() {
                             type="text"
                             placeholder="Display Name"
                             {...register("name", { required: "Name is required", minLength: 2 })}
-                            className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-full"
+                            className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-full focus:outline-none focus:border-line-hover"
                         />
-                        {errors.name && <p className="text-red-1 text-xs">{errors.name.message as string}</p>}
+                        {errors.name && <p className="text-error text-xs">{errors.name.message as string}</p>}
                     </div>
 
-                    <div className="flex flex-row justify-end pt-4">
-                        <button onClick={() => setChangeNameOpen(false)} type="button">
-                            <p>Cancel</p>
+                    <div className="flex flex-row justify-end pt-4 space-x-3">
+                        <button
+                            onClick={() => setChangeNameOpen(false)}
+                            type="button"
+                            className="px-3 py-1.5 rounded-lg text-text-muted hover:text-text text-[13px]"
+                        >
+                            Cancel
                         </button>
-                        <button className="ml-4 bg-purple-1 text-white drop-shadow-md py-2 px-4 rounded-md">
-                            <p>Change</p>
+                        <button className="px-4 py-1.5 bg-accent text-white rounded-lg text-[13px] font-medium hover:opacity-90">
+                            Change
                         </button>
                     </div>
                 </form>
@@ -175,31 +191,35 @@ export default function Nav() {
 
             <Modal open={deleteAccountOpen} setOpen={setDeleteAccountOpen} title="Delete Account">
                 <div className="max-w-[500px]">
-                    <p className="mb-4">
+                    <p className="mb-4 text-[13px] text-text-muted">
                         Are you sure you want to delete your account? All habit tracking data will be lost.
                     </p>
                     {user?.providerData[0].providerId == "password" && (
                         <div className="space-y-1 mb-4">
-                            <p>Enter your password to confirm account deletion.</p>
+                            <p className="text-[13px]">Enter your password to confirm account deletion.</p>
                             <input
                                 type="password"
                                 placeholder="Password"
-                                className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-[20ch]"
+                                className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-[20ch] focus:outline-none focus:border-line-hover"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            {passwordError && <p className="text-red-1 text-xs">{passwordError}</p>}
+                            {passwordError && <p className="text-error text-xs">{passwordError}</p>}
                         </div>
                     )}
-                    <div className="flex flex-row justify-end">
-                        <button onClick={() => setDeleteAccountOpen(false)} type="button">
-                            <p>Cancel</p>
+                    <div className="flex flex-row justify-end space-x-3">
+                        <button
+                            onClick={() => setDeleteAccountOpen(false)}
+                            type="button"
+                            className="px-3 py-1.5 rounded-lg text-text-muted hover:text-text text-[13px]"
+                        >
+                            Cancel
                         </button>
                         <button
                             onClick={handleDeleteAccount}
-                            className="ml-4 bg-red-1 text-white drop-shadow-md py-2 px-4 rounded-md"
+                            className="px-4 py-1.5 bg-error text-white rounded-lg text-[13px] font-medium hover:opacity-90"
                         >
-                            <p>Delete</p>
+                            Delete
                         </button>
                     </div>
                 </div>
