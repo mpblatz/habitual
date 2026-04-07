@@ -1,7 +1,31 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { getCurrentDate } from "../../lib/date";
 import GridV0 from "./GridV0";
+
+function generateDemoData(year: number): Record<string, GridData> {
+    const data: Record<string, GridData> = {};
+    const start = new Date(year, 0, 1);
+    const end = new Date() < new Date(year, 11, 31) ? new Date() : new Date(year, 11, 31);
+
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        const key = `${mm}-${dd}-${year}`;
+
+        // Use a seeded-ish pattern: mix of day-of-year and some trig for variety
+        const dayOfYear = Math.floor((d.getTime() - start.getTime()) / 86400000);
+        const noise = Math.sin(dayOfYear * 0.8) * 0.5 + Math.cos(dayOfYear * 0.3) * 0.3;
+        const weekday = d.getDay();
+        // Weekdays more active, weekends lighter
+        const weekdayBoost = weekday >= 1 && weekday <= 5 ? 0.3 : -0.1;
+        const raw = noise + weekdayBoost + 0.4;
+        const value = raw > 0.7 ? 3 : raw > 0.4 ? 2 : raw > 0.1 ? 1 : 0;
+
+        data[key] = { value, habits: [`Demo: ${value}/3 habits`] };
+    }
+    return data;
+}
 
 function computeStats(
     habits: Habit[],
@@ -96,6 +120,8 @@ function computeStats(
 export default function Chart({ habits }: { habits: Habit[] }) {
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
+    const [showDemo, setShowDemo] = useState(false);
+    const demoData = useMemo(() => generateDemoData(selectedYear), [selectedYear]);
 
     // Determine the earliest year from habit data
     let earliestYear = currentYear;
@@ -212,7 +238,17 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                 }}
                 className="flex justify-center rounded-xl py-4 px-4 overflow-x-auto"
             >
-                <GridV0 values={populateGridData()} until={untilDate} />
+                <GridV0 values={showDemo ? demoData : populateGridData()} until={untilDate} />
+            </div>
+
+            {/* Demo toggle */}
+            <div className="flex justify-end mt-2">
+                <button
+                    onClick={() => setShowDemo((v) => !v)}
+                    className="font-mono text-[10px] tracking-wide text-text-very-faint hover:text-text-faint"
+                >
+                    {showDemo ? "Hide demo" : "Show demo"}
+                </button>
             </div>
         </div>
     );
