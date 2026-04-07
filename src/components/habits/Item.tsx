@@ -1,4 +1,4 @@
-import { IconDots } from "@tabler/icons-react";
+import { IconDots, IconFlame } from "@tabler/icons-react";
 import { useState } from "react";
 import Modal from "../Modal";
 import { useForm } from "react-hook-form";
@@ -105,6 +105,26 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
 
     const isComplete = habit.history[today].progress >= habit.history[today].goalNumber;
 
+    // Calculate streak: consecutive days meeting goal, counting back from today
+    const streak = (() => {
+        let count = 0;
+        const d = new Date();
+        while (true) {
+            const mm = String(d.getMonth() + 1).padStart(2, "0");
+            const dd = String(d.getDate()).padStart(2, "0");
+            const yyyy = d.getFullYear();
+            const key = `${mm}-${dd}-${yyyy}`;
+            const entry = habit.history[key];
+            if (entry && entry.progress >= entry.goalNumber) {
+                count++;
+                d.setDate(d.getDate() - 1);
+            } else {
+                break;
+            }
+        }
+        return count;
+    })();
+
     return (
         <div>
             <div
@@ -146,6 +166,12 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
                         >
                             +
                         </button>
+                        {streak > 0 && (
+                            <span className="flex items-center space-x-0.5 text-accent">
+                                <IconFlame size={13} />
+                                <span>{streak}</span>
+                            </span>
+                        )}
                     </div>
                 </div>
 
