@@ -17,7 +17,7 @@ export default function Grid() {
     function renderGrid() {
         let data = generateGridData();
         console.log(data);
-        let rgbValues = getRgbColor("purple");
+        let rgbValues = getRgbColor("orange");
         return data.map((item, index) => <Cell key={index} {...item} rgbValues={rgbValues} />);
     }
 

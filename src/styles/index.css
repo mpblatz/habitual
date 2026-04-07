@@ -26,6 +26,7 @@
     --tag-lightness: 38%;
     --input-bg: rgba(0, 0, 0, 0.03);
     --error: #e8505b;
+    --grid-empty: #eeeeee;
 }
 
 /* ─── Dark Theme ─── */
@@ -51,6 +52,7 @@
     --tag-lightness: 62%;
     --input-bg: rgba(255, 255, 255, 0.04);
     --error: #fd6566;
+    --grid-empty: rgba(255, 255, 255, 0.06);
     color-scheme: dark;
 }
 

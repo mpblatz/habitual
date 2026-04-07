@@ -249,6 +249,6 @@ export default class GridV0 extends React.Component<Props, State> {
 GridV0.defaultProps = {
     weekNames: ["", "M", "", "W", "", "F", ""],
     monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    panelColors: ["#EEE", "#CCC9F7", "#9894F0", "#4942E4"],
+    panelColors: ["var(--grid-empty)", "#FFD2B0", "#FF9A5C", "#FF5F15"],
     dateFormat: "MM-DD-YYYY",
 };

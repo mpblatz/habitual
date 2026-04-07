@@ -1,6 +1,6 @@
 const colorsToRgb: { [key: string]: number[] } = {
     red: [232, 80, 91],
-    orange: [232, 121, 80],
+    orange: [255, 95, 21],
     yellow: [249, 213, 110],
     green: [107, 203, 119],
     blue: [113, 169, 254],
