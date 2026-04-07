@@ -9,9 +9,9 @@ export default function Cell({ rgbValues, date, progress, ph }: Cell) {
 
     const tooltipStyle: CSSProperties = {
         visibility: tooltipVisible ? "visible" : "hidden",
-        bottom: "150%", // Position the tooltip above the parent
-        left: "50%", // Adjust as needed
-        transform: "translateX(-50%)", // Center horizontally
+        bottom: "150%",
+        left: "50%",
+        transform: "translateX(-50%)",
     };
 
     const handleMouseOver = () => {
@@ -27,16 +27,15 @@ export default function Cell({ rgbValues, date, progress, ph }: Cell) {
             <div
                 onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}
-                className={`relative w-3 h-3 m-0.5 rounded`}
+                className="relative w-3 h-3 m-0.5 rounded"
                 style={cellStyle}
             >
-                {/* tooltip for info on the specific day */}
                 <div
-                    className={`z-10 absolute bg-b-primary dark:bg-db-primary drop-shadow p-2 rounded min-w-[130px] flex flex-col items-center`}
+                    className="z-10 absolute bg-card-bg border border-line shadow-card-hover p-2 rounded min-w-[130px] flex flex-col items-center"
                     style={tooltipStyle}
                 >
                     <div>
-                        <p className="text-xs">{date}</p>
+                        <p className="font-mono text-[11px] text-text-muted">{date}</p>
                     </div>
                 </div>
             </div>

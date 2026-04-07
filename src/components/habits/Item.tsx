@@ -103,53 +103,72 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
         setRemoveOpen(false);
     };
 
+    const isComplete = habit.history[today].progress >= habit.history[today].goalNumber;
+
     return (
         <div>
             <div
-                className={`bg-b-secondary dark:bg-db-secondary flex flex-row relative justify-between w-full drop-shadow px-2 py-1 rounded-md`}
+                style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow)" }}
+                className="relative rounded-lg flex flex-row justify-between w-full px-4 py-3 transition-shadow duration-300 hover:shadow-card-hover"
             >
                 <div className="flex flex-row items-center space-x-6">
                     <div className="flex flex-row items-center py-1">
                         <button
-                            id="button"
                             className={
-                                "rounded-full h-4 w-4 mr-2" +
-                                (habit.history[today].progress >= habit.history[today].goalNumber
-                                    ? " bg-t-primary dark:bg-dt-primary "
-                                    : " border-2 border-t-primary dark:border-dt-primary")
+                                "rounded-full h-4 w-4 mr-2 transition-all" +
+                                (isComplete
+                                    ? " bg-accent"
+                                    : " border-2 border-text-faint hover:border-text-muted")
                             }
                             onClick={() =>
                                 handleSetProgress(
-                                    habit.history[today].progress >= habit.history[today].goalNumber
-                                        ? 0
-                                        : Number(habit.history[today].goalNumber)
+                                    isComplete ? 0 : Number(habit.history[today].goalNumber)
                                 )
                             }
                         />
-                        <p className="ml-2 mr-4 text-t-primary dark:text-dt-primary">{habit.title}</p>
+                        <p className="ml-2 mr-4 text-text">{habit.title}</p>
                     </div>
 
-                    <div className="flex flex-row space-x-3">
-                        <button onClick={() => handleSetProgress(habit.history[today].progress - 1)}>-</button>
-                        <p>
+                    <div className="flex flex-row items-center space-x-3 font-mono text-[11px] tracking-wide text-text-muted">
+                        <button
+                            onClick={() => handleSetProgress(habit.history[today].progress - 1)}
+                            className="w-6 h-6 rounded bg-btn-bg border border-line hover:border-line-hover flex items-center justify-center"
+                        >
+                            -
+                        </button>
+                        <span>
                             {habit.history[today].progress}/{habit.history[today].goalNumber}{" "}
                             {habit.history[today].goalUnit}
-                        </p>
-                        <button onClick={() => handleSetProgress(habit.history[today].progress + 1)}>+</button>
+                        </span>
+                        <button
+                            onClick={() => handleSetProgress(habit.history[today].progress + 1)}
+                            className="w-6 h-6 rounded bg-btn-bg border border-line hover:border-line-hover flex items-center justify-center"
+                        >
+                            +
+                        </button>
                     </div>
                 </div>
 
                 <Popover placement="right-start">
                     <PopoverTrigger>
-                        <IconDots className="h-6 w-6 text-t-primary dark:text-dt-primary ml-10" />
+                        <IconDots className="h-5 w-5 text-text-faint hover:text-text ml-10" />
                     </PopoverTrigger>
                     <PopoverContent className="Popover">
-                        <div className="p-2 flex flex-col items-start bg-b-secondary drop-shadow dark:bg-db-secondary rounded-md">
-                            <button onClick={() => setEditOpen(true)}>
-                                <p className="text-t-primary dark:text-dt-primary">Edit</p>
+                        <div
+                            style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow-hover)" }}
+                            className="p-1 flex flex-col items-start rounded-lg"
+                        >
+                            <button
+                                onClick={() => setEditOpen(true)}
+                                className="text-text-muted hover:text-text text-[13px] px-3 py-1.5 w-full text-left rounded hover:bg-btn-bg"
+                            >
+                                Edit
                             </button>
-                            <button onClick={() => setRemoveOpen(true)}>
-                                <p className="text-t-primary dark:text-dt-primary">Remove</p>
+                            <button
+                                onClick={() => setRemoveOpen(true)}
+                                className="text-text-muted hover:text-text text-[13px] px-3 py-1.5 w-full text-left rounded hover:bg-btn-bg"
+                            >
+                                Remove
                             </button>
                         </div>
                     </PopoverContent>
@@ -157,15 +176,15 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
             </div>
 
             <Modal open={editOpen} setOpen={setEditOpen} title={"Edit Habit"}>
-                <form onSubmit={handleSubmit(handleEditHabit)} className="space-y-2">
+                <form onSubmit={handleSubmit(handleEditHabit)} className="space-y-3">
                     <div className="space-y-1">
                         <input
                             type="text"
                             placeholder="Habit Title"
                             {...register("title", { required: "Habit Title is required", minLength: 2 })}
-                            className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-full"
+                            className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-full focus:outline-none focus:border-line-hover"
                         />
-                        {errors.title && <p className="text-red-1 text-xs">{errors.title.message as string}</p>}
+                        {errors.title && <p className="text-error text-xs">{errors.title.message as string}</p>}
                     </div>
 
                     <div className="flex flex-row items-center space-x-2">
@@ -174,10 +193,10 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
                                 type="number"
                                 placeholder="45"
                                 {...register("goalNumber", { required: "Goal Number is required", minLength: 1 })}
-                                className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary w-[5ch]"
+                                className="p-2.5 rounded-lg bg-input-bg border border-line text-text w-[5ch] focus:outline-none focus:border-line-hover"
                             />
                             {errors.goalNumber && (
-                                <p className="text-red-1 text-xs">{errors.goalNumber.message as string}</p>
+                                <p className="text-error text-xs">{errors.goalNumber.message as string}</p>
                             )}
                         </div>
 
@@ -186,20 +205,24 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
                                 type="text"
                                 placeholder="Minutes"
                                 {...register("goalUnit", { required: "Goal Units are required", minLength: 1 })}
-                                className="p-2 rounded-md shadow-inner bg-b-tertiary dark:bg-db-tertiary "
+                                className="p-2.5 rounded-lg bg-input-bg border border-line text-text focus:outline-none focus:border-line-hover"
                             />
                             {errors.goalUnit && (
-                                <p className="text-red-1 text-xs">{errors.goalUnit.message as string}</p>
+                                <p className="text-error text-xs">{errors.goalUnit.message as string}</p>
                             )}
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-end pt-4">
-                        <button onClick={() => setEditOpen(false)} type="button">
-                            <p>Cancel</p>
+                    <div className="flex flex-row justify-end pt-4 space-x-3">
+                        <button
+                            onClick={() => setEditOpen(false)}
+                            type="button"
+                            className="px-3 py-1.5 rounded-lg text-text-muted hover:text-text text-[13px]"
+                        >
+                            Cancel
                         </button>
-                        <button className="ml-4 bg-purple-1 text-white drop-shadow-md py-2 px-4 rounded-md">
-                            <p>Edit</p>
+                        <button className="px-4 py-1.5 bg-accent text-white rounded-lg text-[13px] font-medium hover:opacity-90">
+                            Edit
                         </button>
                     </div>
                 </form>
@@ -207,25 +230,29 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
 
             <Modal open={removeOpen} setOpen={setRemoveOpen} title={"Remove Habit"}>
                 <div className="max-w-[500px]">
-                    <p>
+                    <p className="text-[13px] text-text-muted">
                         Are you sure you want to delete your habit? If so, select delete. If you only want to retire
                         your habit, select retire. You will still be able to view retired habit data.
                     </p>
-                    <div className="flex flex-row justify-end pt-4">
-                        <button onClick={() => setRemoveOpen(false)} type="button">
-                            <p>Cancel</p>
+                    <div className="flex flex-row justify-end pt-4 space-x-3">
+                        <button
+                            onClick={() => setRemoveOpen(false)}
+                            type="button"
+                            className="px-3 py-1.5 rounded-lg text-text-muted hover:text-text text-[13px]"
+                        >
+                            Cancel
                         </button>
                         <button
                             onClick={handleRetireHabit}
-                            className="ml-4 bg-b-primary dark:bg-db-tertiary text-t-primary dark:text-dt-primary drop-shadow-md py-2 px-4 rounded-md"
+                            className="px-4 py-1.5 bg-btn-bg border border-line text-text rounded-lg text-[13px] font-medium hover:border-line-hover"
                         >
-                            <p>Retire</p>
+                            Retire
                         </button>
                         <button
                             onClick={handleDeleteHabit}
-                            className="ml-4 bg-red-1 text-white drop-shadow-md py-2 px-4 rounded-md"
+                            className="px-4 py-1.5 bg-error text-white rounded-lg text-[13px] font-medium hover:opacity-90"
                         >
-                            <p>Delete</p>
+                            Delete
                         </button>
                     </div>
                 </div>

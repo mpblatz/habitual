@@ -32,13 +32,15 @@ export default function Chart({ habits }: { habits: Habit[] }) {
 
         return transformedData;
     }
-    // console.log(populateGridData());
 
     return (
         <div>
-            <h3>Chart</h3>
-            <hr className="mb-2" />
-            <div className="bg-white flex justify-center rounded-md drop-shadow py-4 px-1">
+            <h3 className="font-heading font-bold">Chart</h3>
+            <div className="border-t border-divider mb-3" />
+            <div
+                style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow)" }}
+                className="inline-flex rounded-xl py-4 px-4 overflow-x-auto max-w-full"
+            >
                 <GridV0 values={populateGridData()} until={getCurrentDate()} />
             </div>
         </div>

@@ -6,7 +6,7 @@ import Footer from "./components/layout/Footer";
 
 function App() {
     return (
-        <div className="flex flex-col min-h-screen max-w-[800px] px-10 m-auto text-t-primary bg-b-primary dark:text-dt-primary dark:bg-db-primary">
+        <div className="flex flex-col min-h-screen max-w-content mx-auto px-8 md:px-12 py-8 md:py-12 text-text bg-bg">
             <Router>
                 <div id="content" style={{ flex: 1 }}>
                     <Routes>
