@@ -5,13 +5,26 @@ import GridV0 from "./GridV0";
 
 function generateDemoData(year: number): Record<string, GridData> {
     const data: Record<string, GridData> = {};
-    const start = new Date(year, 0, 1);
-    const end = new Date() < new Date(year, 11, 31) ? new Date() : new Date(year, 11, 31);
+    const currentYear = new Date().getFullYear();
+    const isCurrentYear = year === currentYear;
+
+    let start: Date;
+    let end: Date;
+
+    if (isCurrentYear) {
+        // Fill the last ~year of data so the rolling grid is fully populated
+        end = new Date();
+        start = new Date(end);
+        start.setFullYear(start.getFullYear() - 1);
+    } else {
+        start = new Date(year, 0, 1);
+        end = new Date(year, 11, 31);
+    }
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
         const mm = String(d.getMonth() + 1).padStart(2, "0");
         const dd = String(d.getDate()).padStart(2, "0");
-        const key = `${mm}-${dd}-${year}`;
+        const key = `${mm}-${dd}-${d.getFullYear()}`;
 
         // Use a seeded-ish pattern: mix of day-of-year and some trig for variety
         const dayOfYear = Math.floor((d.getTime() - start.getTime()) / 86400000);

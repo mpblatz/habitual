@@ -1,4 +1,3 @@
-import { IconUser } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -112,19 +111,22 @@ export default function Nav() {
     return (
         <div>
             <div className="flex justify-between items-center py-4 space-x-1">
-                <h3 className="text-accent font-heading font-bold">Habitual</h3>
+                <h1 className="font-heading font-bold">Habitual</h1>
 
                 <div className="flex items-center space-x-3">
                     <ThemeToggle />
                     {user ? (
                         <Popover placement="bottom-end">
                             <PopoverTrigger className="flex items-center px-3 py-1.5 rounded-lg space-x-1.5 text-text-muted border border-line bg-btn-bg hover:text-text hover:border-line-hover">
-                                <IconUser className="w-4 h-4" />
                                 <span className="font-mono text-[11px] tracking-wide">{name}</span>
                             </PopoverTrigger>
                             <PopoverContent className="Popover">
                                 <div
-                                    style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow-hover)" }}
+                                    style={{
+                                        backgroundColor: "var(--card-bg)",
+                                        border: "1px solid var(--border)",
+                                        boxShadow: "var(--shadow-hover)",
+                                    }}
                                     className="flex flex-col items-start p-2 rounded-lg space-y-1"
                                 >
                                     <button
