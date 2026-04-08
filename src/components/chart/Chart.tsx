@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCurrentDate } from "../../lib/date";
 import GridV0 from "./GridV0";
 
@@ -198,7 +198,7 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                         disabled={selectedYear <= earliestYear}
                         className="w-6 h-6 flex items-center justify-center rounded text-text-muted hover:text-text disabled:text-text-very-faint disabled:cursor-default"
                     >
-                        <IconChevronLeft size={16} />
+                        <ChevronLeft size={16} />
                     </button>
                     <span className="font-mono text-[12px] tracking-wide text-text-muted min-w-[3ch] text-center">
                         {selectedYear}
@@ -208,7 +208,7 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                         disabled={selectedYear >= currentYear}
                         className="w-6 h-6 flex items-center justify-center rounded text-text-muted hover:text-text disabled:text-text-very-faint disabled:cursor-default"
                     >
-                        <IconChevronRight size={16} />
+                        <ChevronRight size={16} />
                     </button>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { IconDots, IconFlame } from "@tabler/icons-react";
+import { Flame, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import Modal from "../Modal";
 import { useForm } from "react-hook-form";
@@ -168,7 +168,7 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
                         </button>
                         {streak > 0 && (
                             <span className="flex items-center space-x-0.5 text-accent">
-                                <IconFlame size={13} />
+                                <Flame size={13} />
                                 <span>{streak}</span>
                             </span>
                         )}
@@ -177,7 +177,7 @@ export default function Item({ habit, setHabits }: { habit: Habit; setHabits: (v
 
                 <Popover placement="right-start">
                     <PopoverTrigger>
-                        <IconDots className="h-5 w-5 text-text-faint hover:text-text ml-10" />
+                        <MoreHorizontal className="h-5 w-5 text-text-faint hover:text-text ml-10" />
                     </PopoverTrigger>
                     <PopoverContent className="Popover">
                         <div

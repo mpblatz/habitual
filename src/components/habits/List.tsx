@@ -1,4 +1,4 @@
-import { IconCirclePlus } from "@tabler/icons-react";
+import { PlusCircle } from "lucide-react";
 import Item from "./Item";
 import Modal from "../Modal";
 import { useState } from "react";
@@ -67,7 +67,7 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
                     }}
                     className="flex flex-row items-center space-x-2 mx-auto py-2 pl-2 pr-4 text-text-muted hover:text-text rounded-lg"
                 >
-                    <IconCirclePlus size={18} />
+                    <PlusCircle size={18} />
                     <span className="font-mono text-[11px] tracking-wide">Add Habit</span>
                 </button>
             </div>
