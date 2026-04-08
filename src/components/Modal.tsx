@@ -1,4 +1,4 @@
-import { IconX } from "@tabler/icons-react";
+import { XIcon } from "lucide-react";
 
 export default function Modal({
     open,
@@ -21,13 +21,17 @@ export default function Modal({
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
-                    style={{ backgroundColor: "var(--card-bg)", border: "1px solid var(--border)", boxShadow: "var(--shadow-hover)" }}
+                    style={{
+                        backgroundColor: "var(--card-bg)",
+                        border: "1px solid var(--border)",
+                        boxShadow: "var(--shadow-hover)",
+                    }}
                     className="flex flex-col py-5 px-6 mt-10 rounded-xl max-w-[700px] h-fit"
                 >
                     <div className="flex flex-row justify-between items-center space-x-6 mb-4">
                         <h3 className="font-heading font-bold">{title}</h3>
                         <button onClick={() => setOpen(false)} className="text-text-faint hover:text-text">
-                            <IconX size={18} />
+                            <XIcon size={18} />
                         </button>
                     </div>
                     {children}

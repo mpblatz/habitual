@@ -1,9 +1,4 @@
 export default function Footer() {
-    function renderCurrentYear() {
-        const year = new Date();
-        return year.getFullYear();
-    }
-
     return (
         <div className="flex flex-col mt-16 pt-4 border-t border-divider">
             <div className="flex flex-col md:flex-row items-start md:justify-between py-2">

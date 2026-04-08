@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EmailAuthProvider, User, deleteUser, reauthenticateWithCredential, updateProfile } from "firebase/auth";
@@ -7,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logout, reauthWithGoogle } from "../api/firebase";
 import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 import Modal from "./Modal";
+import AuthModal from "./AuthModal";
 import ThemeToggle from "./ThemeToggle";
 import { deleteUserById, getUser } from "../api/user";
 
@@ -17,11 +17,11 @@ interface NameForm {
 export default function Nav() {
     const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
     const [changeNameOpen, setChangeNameOpen] = useState(false);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [user] = useAuthState(auth);
-    const navigate = useNavigate();
 
     const {
         register,
@@ -100,7 +100,6 @@ export default function Nav() {
     const handleSuccessfulDeletion = () => {
         setDeleteAccountOpen(false);
         setPasswordError("");
-        navigate("/register");
     };
 
     const handleDeletionError = (error: any) => {
@@ -142,10 +141,7 @@ export default function Nav() {
                                         Change Name
                                     </button>
                                     <button
-                                        onClick={() => {
-                                            logout();
-                                            navigate("/login");
-                                        }}
+                                        onClick={() => logout()}
                                         className="text-text-muted hover:text-text text-[13px] px-2 py-1 w-full text-left rounded hover:bg-btn-bg"
                                     >
                                         Logout
@@ -155,7 +151,7 @@ export default function Nav() {
                         </Popover>
                     ) : (
                         <button
-                            onClick={() => navigate("/login")}
+                            onClick={() => setAuthModalOpen(true)}
                             className="flex px-3 py-1.5 rounded-lg border border-line bg-btn-bg text-text-muted hover:text-text hover:border-line-hover"
                         >
                             <span className="font-mono text-[11px] tracking-wide">Login</span>
@@ -190,6 +186,8 @@ export default function Nav() {
                     </div>
                 </form>
             </Modal>
+
+            <AuthModal open={authModalOpen} setOpen={setAuthModalOpen} />
 
             <Modal open={deleteAccountOpen} setOpen={setDeleteAccountOpen} title="Delete Account">
                 <div className="max-w-[500px]">
