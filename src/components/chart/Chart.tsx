@@ -213,10 +213,10 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                 </div>
             </div>
 
-            <div className="border-t border-divider mb-4" />
+            <div className="border-t border-divider mb-3" />
 
             {/* Stats row */}
-            <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="grid grid-cols-4 gap-3 mb-3">
                 {[
                     { label: "Days Tracked", value: stats.totalDays },
                     { label: "Completion", value: `${stats.completionRate}%` },
@@ -230,7 +230,7 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                             border: "1px solid var(--border)",
                             boxShadow: "var(--shadow)",
                         }}
-                        className="rounded-lg py-3 px-3 text-center"
+                        className="rounded-lg py-2 px-3 text-center"
                     >
                         <p className="font-heading font-bold text-[18px] leading-tight text-text">
                             {stat.value}
@@ -249,7 +249,7 @@ export default function Chart({ habits }: { habits: Habit[] }) {
                     border: "1px solid var(--border)",
                     boxShadow: "var(--shadow)",
                 }}
-                className="flex justify-center rounded-xl py-4 px-4 overflow-x-auto"
+                className="flex justify-center rounded-xl py-3 px-4 overflow-x-auto"
             >
                 <GridV0 values={showDemo ? demoData : populateGridData()} until={untilDate} />
             </div>

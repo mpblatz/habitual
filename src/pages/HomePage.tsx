@@ -22,7 +22,7 @@ export default function HomePage() {
     }, [user]);
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-8">
             <Nav />
             <Chart habits={habits} />
             <List habits={habits} setHabits={setHabits} />

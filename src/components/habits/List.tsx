@@ -55,7 +55,7 @@ export default function List({ habits, setHabits }: { habits: Habit[]; setHabits
     }
     return (
         <div>
-            <div className="flex flex-col space-y-3">
+            <div className="flex flex-col space-y-2">
                 <h3 className="font-heading font-bold">Habits</h3>
                 <div className="border-t border-divider" />
                 {renderItems()}
